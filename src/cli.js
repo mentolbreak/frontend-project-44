@@ -8,4 +8,4 @@ function greetings() {
   console.log(`Hello, ${name}!`);
 }
 
-export default greetings;
+export default getGreetings;
