@@ -1,27 +1,41 @@
-import runGameLogic from '../index.js';
-import genRandomNumber from '../utils.js';
+import readlineSync from 'readline-sync';
+import greetings from '../cli.js';
+import { randomNum, getCondition } from '../index.js';
 
-const gameTask = 'What number is missing in the progression?';
+const progressionLenght = 6;
 
-const getProgression = (start, step, length) => {
-  const progression = [];
-  const lastNum = start + step * length;
-  for (let currentNum = start; currentNum < lastNum; currentNum += step) {
-    progression.push(currentNum);
+function progression() {
+  let numberRange = randomNum(0, 100);
+  const progressionStep = randomNum(0, 10);
+  const arrProgression = [];
+
+  for (let i = 0; i < progressionLenght; i += 1) {
+    arrProgression.push(numberRange);
+    numberRange += progressionStep;
   }
-  return progression;
-};
+  return arrProgression;
+}
 
-const theGame = () => {
-  const start = genRandomNumber(1, 15);
-  const step = genRandomNumber(1, 7);
-  const length = genRandomNumber(5, 10);
-  const randomHiddenIndex = genRandomNumber(0, length - 1);
-  const progression = getProgression(start, step, length);
-  const hiddenIndex = progression.splice(randomHiddenIndex, 1, '..');
-  const question = progression.join(' ');
-  const rightAnswer = String(hiddenIndex[0]);
-  return [question, rightAnswer];
-};
+const name = greetings();
+const rule = 'What number is missing in the progression?';
 
-export default () => runGameLogic(gameTask, theGame);
+function getprogression() {
+  console.log('brain-progression \n');
+  console.log(rule);
+  let counter = 0;
+  for (let i = 0; i < 3; i += 1) {
+    const myProgression = progression();
+    const randomIndex = randomNum(0, progressionLenght - 1);
+    const correctAnswer = myProgression[randomIndex];
+    myProgression[randomIndex] = '..';
+    const quest = `Question: ${myProgression.join(' ')} \n`;
+    const userAnswer = readlineSync.question(quest);
+    counter += 1;
+    const bool = getCondition(correctAnswer, +userAnswer, name, counter);
+    if (bool === 'false') {
+      break;
+    }
+  }
+}
+
+export default getprogression;
