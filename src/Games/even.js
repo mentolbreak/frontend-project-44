@@ -21,4 +21,4 @@ function evenGame() {
   }
 }
 
-export default runEvenGame;
+export default evenGame;
