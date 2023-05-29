@@ -4,7 +4,7 @@ import greetings from '../cli.js';
 
 const name = greetings();
 const rule = 'Answer "yes" if the number is even, otherwise answer "no".';
-function evenGame() {
+function runEvenGame() {
   console.log(rule);
   let counter = 0;
   for (let i = 0; i < 3; i += 1) {
@@ -21,4 +21,4 @@ function evenGame() {
   }
 }
 
-export default evenGame;
+export default runEvenGame;
